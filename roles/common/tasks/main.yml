@@ -1,0 +1,21 @@
+---
+
+- name: Make sure https is available for apt
+  stat: path=/usr/lib/apt/methods/https
+  register: apt_https_transport
+
+- name: Install https transport
+  apt: pkg=apt-transport-https state=installed
+  when: not apt_https_transport.stat.exists
+
+- name: Ensure that apt repos are up to date
+  apt: update_cache=yes cache_valid_time={{ aptcachetime }}
+
+- name: Install some common packages
+  apt: pkg={{ item }} state=latest update_cache=yes cache_valid_time={{ aptcachetime }}
+  with_items:
+    - vim
+    - wget
+
+- name: Upgrade installed packages
+  apt: upgrade=yes

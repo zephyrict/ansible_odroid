@@ -1,0 +1,5 @@
+---
+
+aptcachetime: 3600
+docker_gpg_key: https://download.docker.com/linux/ubuntu/gpg
+docker_repository_url: https://download.docker.com/linux/ubuntu

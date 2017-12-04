@@ -1,0 +1,11 @@
+---
+
+- name: Ubuntu playbook for the odroid cluster
+  hosts: odroids
+  roles:
+    # Common roles
+    - { role: locales, become: true }
+    - { role: common, become: true }
+    - { role: hostname, become: true }
+    # Docker
+    - { role: docker, become: true }

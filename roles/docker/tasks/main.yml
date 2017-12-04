@@ -1,0 +1,44 @@
+---
+- name: Remove possible old versions
+  apt:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - docker
+    - docker-engine
+    - docker.io
+
+- name: Update apt package index
+  apt: update_cache=yes cache_valid_time={{ aptcachetime }}
+
+- name: Check prerequisites and install if needed
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - software-properties-common
+
+- name: Add Docker's official GPG Key
+  apt_key:
+    url: "{{ docker_gpg_key }}"
+    state: present
+
+- name: Setup stable repository
+  apt_repository:
+    repo: deb [arch=armhf] {{ docker_repository_url }} xenial stable
+    state: present
+
+- name: Update apt package index
+  apt: update_cache=yes cache_valid_time={{ aptcachetime }}
+
+- name: Install Docker CE
+  apt: name=docker-ce state=present
+
+- name: Add {{remote_user}} to Docker group
+  user:
+    name: "{{ remote_user }}"
+    groups: docker
+    append: yes
