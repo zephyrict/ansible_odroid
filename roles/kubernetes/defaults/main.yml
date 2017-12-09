@@ -1,0 +1,17 @@
+reset: false
+overlay_network: flannel
+network:
+  service_subnet: 10.200.100.0/24
+  pod_subnet: 10.1.0.0/16
+images:
+  flannel: quay.io/coreos/flannel:v0.9.1-arm
+k8s:
+  version: 1.8.5*
+  pod_eviction_timeout: 60s
+  node_monitor_grace_period: 40s
+docker:
+  storage_driver: overlay2
+  expose_tcp: true
+  version: "17.03*"
+
+debug_level: 2

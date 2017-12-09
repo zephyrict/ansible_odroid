@@ -1,7 +1,7 @@
 ---
 
 - name: Ubuntu playbook for the odroid cluster
-  hosts: odroids
+  hosts: all
   roles:
     # Common roles
     - { role: locales, become: true }

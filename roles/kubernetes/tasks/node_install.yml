@@ -1,0 +1,21 @@
+- name: Register token
+  set_fact:
+    kubeadm_token: "{{ lookup('file', playbook_dir + '/run/kubeadm-token.txt') }}"
+
+- name: Clean up
+  file: path=/var/lib/kubelet/pki state=absent
+
+- name: Run kubeadm join
+  command: kubeadm join --token={{ kubeadm_token }} --discovery-token-unsafe-skip-ca-verification master:6443
+
+- name: Wait for kubelet.conf
+  wait_for: path=/etc/kubernetes/kubelet.conf
+
+- name: Copy Kubernetes access config
+  copy: remote_src=True src=/etc/kubernetes/kubelet.conf dest=/home/odroid/.kube/config owner=odroid group=odroid
+
+- name: Fix permission
+  file: path=/var/lib/kubelet/pki/kubelet-client.key mode="660" group=odroid
+
+- name: Fix permission
+  file: path=/var/lib/kubelet/pki/kubelet.key mode="660" group=odroid

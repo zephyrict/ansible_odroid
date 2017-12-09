@@ -1,0 +1,25 @@
+---
+
+- name: Ensure that apt repos are up to date
+  apt: update_cache=yes cache_valid_time={{ aptcachetime }}
+
+- name: Upgrade installed packages
+  apt: upgrade=yes
+
+- name: Add & update packages
+  include: apt_install.yml
+
+- name: Check and update Docker
+  include: docker.yml
+
+- name: Create dir ~/.kube
+  file: path=/home/odroid/.kube state=directory owner=odroid group=users mode=0775
+
+- name: Create dir /etc/kubernetes/apps
+  file: path=/etc/kubernetes/apps state=directory mode=0775
+
+- name: Setup profile
+  template: src=kubernetes_profile.sh dest=/etc/profile.d/kubernetes.sh mode=0644
+
+- name: Install with kubeadm
+  include: kubeadm.yml

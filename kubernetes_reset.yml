@@ -1,0 +1,20 @@
+---
+- name: Kubernetes Master
+
+  hosts: master
+  remote_user: odroid
+  become: true
+
+  roles:
+  - role: kubernetes_reset
+    mode: master
+
+- name: Kubernetes Nodes
+
+  hosts: nodes
+  remote_user: odroid
+  become: true
+
+  roles:
+  - role: kubernetes_reset
+    mode: node

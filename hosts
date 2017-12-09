@@ -1,6 +1,16 @@
-[odroids]
-node-00
+[master]
+node-00 host_extra="master"
+
+[nodes]
 node-01
 node-02
 node-03
 node-04
+
+
+[volumes]
+volume-00
+volume-01
+volume-02
+volume-03
+volume-04

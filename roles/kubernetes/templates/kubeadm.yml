@@ -1,0 +1,12 @@
+kind: MasterConfiguration
+apiVersion: kubeadm.k8s.io/v1alpha1
+networking:
+  podSubnet: "{{ network.pod_subnet }}"
+#  serviceSubnet: "{{ network.service_subnet }}"
+controllerManagerExtraArgs:
+  horizontal-pod-autoscaler-use-rest-clients: "true"
+  horizontal-pod-autoscaler-sync-period: "20s"
+  node-monitor-grace-period: "15s"
+apiServerExtraArgs:
+  runtime-config: "api/all=true"
+kubernetesVersion: "latest-1.8"

@@ -1,0 +1,2 @@
+- name: reset | Reset installation
+  command: kubeadm reset

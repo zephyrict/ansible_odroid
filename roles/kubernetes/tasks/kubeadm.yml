@@ -1,0 +1,24 @@
+- name: kubeadm | Reset if requested
+  command: kubeadm reset
+  when: reset
+  tags:
+    - reset
+    
+- name: Check for a running cluster
+  command: kubectl get nodes
+  become_user: odroid
+  register: kubectl_result
+  failed_when: kubectl_result.rc == 2
+  changed_when: kubectl_result.rc == 1
+
+- block:
+
+  - name: Setup master
+    include: master_install.yml
+    when: mode == "master"
+
+  - name: Setup node
+    include: node_install.yml
+    when: mode == "node"
+
+  when: kubectl_result.rc == 1 or reset
