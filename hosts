@@ -1,11 +1,18 @@
+[droids]
+10.49.2.51 name=node-00 host_extra="master"
+10.49.2.52 name=node-01
+10.49.2.53 name=node-02
+10.49.2.54 name=node-03
+10.49.2.55 name=node-04
+
 [master]
-node-00 host_extra="master"
+10.49.2.51
 
 [nodes]
-node-01
-node-02
-node-03
-node-04
+10.49.2.52
+10.49.2.53
+10.49.2.54
+10.49.2.55
 
 
 [volumes]

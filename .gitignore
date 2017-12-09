@@ -2,7 +2,7 @@
 config.yml
 bin/
 *.tar.gz
-run/pi-cluster.cfg
 run/kubeadm-token.txt
 images/*
 run/admin.conf
+run/odroid-cluster.cfg

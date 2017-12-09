@@ -1,0 +1,7 @@
+- name: Deployments
+  hosts: master
+  any_errors_fatal: true
+  remote_user: odroid
+  become: true
+  roles:
+  - role: tools
