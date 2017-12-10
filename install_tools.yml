@@ -1,4 +1,4 @@
-- name: Deployments
+- name: tools
   hosts: master
   any_errors_fatal: true
   remote_user: odroid

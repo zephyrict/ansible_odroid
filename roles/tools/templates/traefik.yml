@@ -30,18 +30,11 @@ data:
     [entryPoints]
       [entryPoints.http]
       address = ":80"
-      #[entryPoints.http.auth.basic]
-      # Login using simply "kubernetes:rocks!"
-      #users = ["kubernetes:$apr1$G8MQMx/M$5SsH5VwBiGRH4bcbauEk61"]
-
     # Enable the kubernetes integration
     [kubernetes]
-
     [web]
     address = ":8080"
-
     [web.statistics]
-
     [web.metrics.prometheus]
       buckets=[0.1,0.3,1.2,5.0]
 ---
@@ -93,3 +86,19 @@ spec:
       - name: traefik-cfg
         configMap:
           name: traefik-cfg
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kubernetes-dashboard
+  namespace: kube-system
+  annotations:
+    traefik.frontend.rule.type: PathPrefixStrip
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /dashboard/
+        backend:
+          serviceName: kubernetes-dashboard
+          servicePort: 80
